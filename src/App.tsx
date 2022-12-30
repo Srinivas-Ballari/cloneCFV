@@ -23,19 +23,20 @@ function App() {
       axios.get("https://codeforces.com/api/user.status?handle="+userH).then((res)=>{
         setdata(res.data);
 
-        //  built a map
-        const mp = new Map();
+        //  built map
+        const mp1 = new Map();
+        const mp2 = new Map();
         for(let i=0;i<res.data.result.length;i++){
-          if (mp.has(res.data.result[i].verdict)) {
-            mp.set(res.data.result[i].verdict, mp.get(res.data.result[i].verdict) + 1);
+          if (mp1.has(res.data.result[i].verdict)) {
+            mp1.set(res.data.result[i].verdict, mp1.get(res.data.result[i].verdict) + 1);
           } else {
-            mp.set(res.data.result[i].verdict, 1);
+            mp1.set(res.data.result[i].verdict, 1);
           }
 
-          if (mp.has(res.data.result[i].programmingLanguage)) {
-            mp.set(res.data.result[i].programmingLanguage, mp.get(res.data.result[i].programmingLanguage) + 1);
+          if (mp2.has(res.data.result[i].programmingLanguage)) {
+            mp2.set(res.data.result[i].programmingLanguage, mp2.get(res.data.result[i].programmingLanguage) + 1);
           } else {
-            mp.set(res.data.result[i].programmingLanguage, 1);
+            mp2.set(res.data.result[i].programmingLanguage, 1);
           }
 
         }
@@ -43,7 +44,7 @@ function App() {
         //creating the data array
       
       let arr = [{}];
-      for (const [cverdict, count] of mp) {
+      for (const [cverdict, count] of mp1) {
         let tempObj = {
           name:cverdict,
           value:count
@@ -53,7 +54,7 @@ function App() {
       setverdict([...arr]);
 
       let parr = [{}];
-      for (const [cverdict, count] of mp) {
+      for (const [cverdict, count] of mp2) {
         let tempObj = {
           name:cverdict,
           value:count
@@ -90,9 +91,9 @@ function App() {
            <div className="shadow-lg p-3 mb-5 bg-white rounded">
             <Charts data={verdict} userH={userH} heading={"Verdict"} />
            </div> 
-           {/* <div className="shadow-lg p-3 mb-5 bg-white rounded">
+           <div className="shadow-lg p-3 mb-5 bg-white rounded">
             <Charts data={progLang} userH={userH} heading={"Programming_Language's"}/>
-           </div> */}
+           </div>
       </div>
     </div>  
 
